@@ -24,38 +24,38 @@ const {Sider} = Layout;
         label: '게시판',
         children: [
           {
-            key: 1,
+            key: 2,
             label: (<Link to="/main/notice" onClick={ () => menuClick(["게시판","공지사항"])}>공지사항</Link>),
           },
           {
-            key: 2,
+            key: 3,
             label: (<Link to="/main/bbs" onClick={ () => menuClick(["게시판","자유게시판"])}>자유게시판</Link>)
           },
           {
-            key: 3,
+            key: 4,
             label: (<Link to="/main/qaBoard" onClick={ () => menuClick(["게시판","질문답변"])}>질문답변</Link>)
           },
         ]
       },
       {
-        key: 2,
+        key: 5,
         icon: React.createElement(SettingOutlined),
         label: '관리자권한',
         children: [
           {
-            key: 4,
+            key: 6,
             label:"코드관리"
           },
           {
-            key: 5,
+            key: 7,
             label:"메뉴관리"
           },
           {
-            key: 6,
+            key: 8,
             label: (<Link to="/main/member" onClick={ () => menuClick(["관리자권한","회원관리"])}>회원관리</Link>)
           },
           {
-            key: 7,
+            key: 9,
             label:"게시판관리"
           },
         ]

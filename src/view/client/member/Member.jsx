@@ -1,4 +1,4 @@
-import { Col, Row, Table } from "antd";
+import {Col, Row, Table} from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -8,8 +8,8 @@ import { Link } from "react-router-dom";
     const [data, setData] = useState([]);
 
     useEffect(() => {
-      axios.get('http://3.35.218.236/bbs/user',{}).then((Response)=>{
-          console.log(Response.data);
+      axios.get('http://3.35.218.236/bbs/user',{}
+      ).then((Response)=>{
           setData(Response.data.userList);
       }).catch((Error)=>{
           console.log(Error);
@@ -20,19 +20,23 @@ import { Link } from "react-router-dom";
       {
         title: 'No',
         dataIndex: 'idx',
+        key : 'No'
       },
       {
         title: 'ID',
         dataIndex: 'id',
-        render: (id) => <Link to={`/main/member/detail/${id}`}>{id}</Link>
+        render: (id) => <Link to={`/main/member/detail/${id}`}>{id}</Link>,
+        key : 'Id'
       },
       {
         title: '성명',
         dataIndex: 'name',
+        key : 'Name'
       },
       {
         title: '권한',
         dataIndex: 'rule',
+        key : 'Rule'
       } 
     ];
     
@@ -40,7 +44,7 @@ import { Link } from "react-router-dom";
       <div>
         <Row>
           <Col span={24}>
-            
+
           </Col>
           <Col span={24}>
             

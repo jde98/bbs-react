@@ -10,8 +10,8 @@ import Bbs from '../client/Bbs';
 import QaBoard from '../client/QaBoard';
 import Notice from '../client/Notice';
 import { useSelector } from 'react-redux';
-import Member from './Member';
-import MemberDetail from './MemberDetail';
+import Member from './member/Member';
+import MemberDetail from './member/MemberDetail';
 
 const {Content} = Layout;
 
