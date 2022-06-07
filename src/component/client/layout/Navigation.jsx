@@ -1,20 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Layout, Menu } from 'antd';
 import { UserOutlined, SettingOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { menuSelcted } from '../../../action/action';
+import {useDispatch, useSelector} from 'react-redux';
+import {menuSelected} from "../../../reducers/menuSelect";
 
 const {Sider} = Layout;
 
-  export default function Navigation() {
+const Navigation = () => {
 
     const dispatch = useDispatch();
+    const [collapsed, setCollapsed] = useState(false);
 
     const menuClick = (name) => {
-      dispatch(menuSelcted(name));
-
-      
+      dispatch(menuSelected(name));
     }
 
     const leftMenu = [
@@ -61,20 +60,23 @@ const {Sider} = Layout;
         ]
       },
     ];
-
-
     return (
-      <Sider width={200} className="site-layout-background">
-      <Menu
-        mode="inline"
-        defaultSelectedKeys={['1']}
-        defaultOpenKeys={['1']}
-        style={{
-          height: '100%',
-          borderRight: 0,
-        }}
-        items={leftMenu}
-      />
-    </Sider>
+      <Sider width={200}
+             className="site-layout-background"
+             collapsible collapsed={collapsed}
+             onCollapse={value => setCollapsed(value)}
+      >
+        <Menu
+            theme="dark"
+          mode="inline"
+          defaultSelectedKeys={['2']}
+          defaultOpenKeys={['1']}
+          style={{
+            height: '1000px',
+          }}
+          items={leftMenu}
+        />
+      </Sider>
     );
-  }
+}
+export default Navigation;
