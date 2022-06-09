@@ -16,7 +16,7 @@ import MemberDetail from './member/MemberDetail';
 const {Content} = Layout;
 
 const Main = () => {
-  const selectedMenu = useSelector((state) => state.menu);
+  const selectedMenu = useSelector((state) => state.menu.value);
 
   return (
     <Layout>
@@ -33,8 +33,8 @@ const Main = () => {
             margin: '16px 0',
           }}
         >
-          <Breadcrumb.Item>{selectedMenu.menu[0]}</Breadcrumb.Item>
-          <Breadcrumb.Item>{selectedMenu.menu[1]}</Breadcrumb.Item>
+          <Breadcrumb.Item>{selectedMenu[0]}</Breadcrumb.Item>
+          <Breadcrumb.Item>{selectedMenu[1]}</Breadcrumb.Item>
         </Breadcrumb>
         <Content
           className="site-layout-background"

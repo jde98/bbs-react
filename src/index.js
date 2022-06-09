@@ -4,13 +4,20 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import { Provider } from "react-redux";
-import { createStore } from "redux";
-import { composeWithDevTools } from 'redux-devtools-extension'
+/*import { createStore } from "redux";
+import { composeWithDevTools } from 'redux-devtools-extension'*/
+/*import rootReducer from "./reducers";*/
+import { configureStore } from '@reduxjs/toolkit'
 
-import rootReducer from "./reducers";
+import menuReducer from "./reducers/menuReducer";
 
 // 위에서 만든 reducer를 스토어 만들때 넣어줍니다
-const store = createStore(rootReducer, composeWithDevTools());
+/*const store = createStore(rootReducer, composeWithDevTools());*/
+const store = configureStore({
+    reducer: {
+        menu: menuReducer,
+    },
+})
 
 ReactDOM.render(
   <React.StrictMode>

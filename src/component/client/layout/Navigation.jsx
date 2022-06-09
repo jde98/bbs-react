@@ -3,7 +3,8 @@ import { Layout, Menu } from 'antd';
 import { UserOutlined, SettingOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
-import {menuSelected} from "../../../reducers/menuSelect";
+/*import {menuSelected} from "../../../reducers/menuSelect";*/
+import {MenuSelected} from "../../../reducers/menuReducer";
 
 const {Sider} = Layout;
 
@@ -13,7 +14,7 @@ const Navigation = () => {
     const [collapsed, setCollapsed] = useState(false);
 
     const menuClick = (name) => {
-      dispatch(menuSelected(name));
+      dispatch(MenuSelected(name));
     }
 
     const leftMenu = [
