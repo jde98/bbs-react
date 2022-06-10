@@ -1,6 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import Login from "./view/client/Login";
-import Main from "./view/client/Main";
+import Login from "./view/bbs/Login";
+import Main from "./view/bbs/Main";
 
 
 function App() {

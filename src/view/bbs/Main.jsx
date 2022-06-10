@@ -2,13 +2,13 @@ import React from 'react';
 import "../../assets/antd.css"
 import { Layout, Breadcrumb } from 'antd';
 
-import ClientHeader from '../../component/client/layout/ClientHeader';
-import Navigation from '../../component/client/layout/Navigation';
+import ClientHeader from '../../component/bbs/layout/ClientHeader';
+import Navigation from '../../component/bbs/layout/Navigation';
 
 import { Route, Routes } from 'react-router-dom';
-import Bbs from '../client/Bbs';
-import QaBoard from '../client/QaBoard';
-import Notice from '../client/Notice';
+import Bbs from './/Bbs';
+import QaBoard from './/QaBoard';
+import Notice from './/Notice';
 import { useSelector } from 'react-redux';
 import Member from './member/Member';
 import MemberDetail from './member/MemberDetail';
