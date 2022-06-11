@@ -3,6 +3,7 @@ import { Form, Input, InputNumber, Button } from 'antd';
 import axios from "axios";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import {instance} from "../../../api/axiosInit";
 
 export default function MemberDetail() {
 
@@ -31,17 +32,13 @@ export default function MemberDetail() {
         console.log(values);
     };
 
-    useEffect(() => {
-
-      axios.get('http://localhost:8089/user', {
-          params: {
-              id: id,
-          },
-      }).then((Response) => {
-          console.log(Response.data);
-      }).catch((Error) => {
-          console.log(Error);
-      });
+    useEffect(async () => {
+        const result = await instance.get('http://3.35.218.236/bbs/user',{
+            params: {
+                id: id,
+            }
+        });
+        console.log(result.data);
 
     }, []);
 

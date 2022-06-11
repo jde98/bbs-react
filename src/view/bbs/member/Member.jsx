@@ -2,18 +2,15 @@ import {Col, Row, Table} from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import {instance} from "../../../api/axiosInit";
 
   export default function Member() {
 
     const [data, setData] = useState([]);
 
-    useEffect(() => {
-      axios.get('http://3.35.218.236/bbs/user',{}
-      ).then((Response)=>{
-          setData(Response.data.userList);
-      }).catch((Error)=>{
-          console.log(Error);
-      });
+    useEffect(async () => {
+      const result = await instance.get('http://3.35.218.236/bbs/user',{});
+      setData(result.data.userList);
     },[]);
 
     const columns = [
