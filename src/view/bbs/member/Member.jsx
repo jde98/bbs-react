@@ -1,4 +1,4 @@
-import {Col, Row, Table} from "antd";
+import {Card, Col, Input, Row, Space, Table} from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -41,7 +41,12 @@ import {instance} from "../../../api/axiosInit";
       <div>
         <Row>
           <Col span={24}>
-
+            <Space>
+              <Card title="Card" size="small">
+                <p>Card content</p>
+                <p>Card content</p>
+              </Card>
+            </Space>
           </Col>
           <Col span={24}>
             
