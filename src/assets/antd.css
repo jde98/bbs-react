@@ -15,3 +15,18 @@ margin: 16px 0 16px 24px;
 .site-layout-background {
 background: #fff;
 }
+.search-form{
+    border: 1px solid #f0f0f0;
+}
+.search-form{
+    border: 1px solid #f0f0f0;
+    padding :10px;
+    margin-bottom: 10px;
+}
+.search-form input{
+    width: 150px;
+    margin-right: 10px;
+}
+.search-form button{
+    float: right;
+}

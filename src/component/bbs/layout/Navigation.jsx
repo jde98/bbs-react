@@ -63,12 +63,13 @@ const Navigation = () => {
     ];
     return (
       <Sider width={200}
+             breakpoint="md"
              className="site-layout-background"
              collapsible collapsed={collapsed}
              onCollapse={value => setCollapsed(value)}
       >
         <Menu
-            theme="dark"
+          theme="dark"
           mode="inline"
           defaultSelectedKeys={['2']}
           defaultOpenKeys={['1']}

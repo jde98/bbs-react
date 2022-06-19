@@ -12,6 +12,7 @@ import Notice from './/Notice';
 import { useSelector } from 'react-redux';
 import Member from './member/Member';
 import MemberDetail from './member/MemberDetail';
+import Login from "./Login";
 
 const {Content} = Layout;
 
@@ -45,6 +46,7 @@ const Main = () => {
           }}
         >
           <Routes>
+            <Route path='/login'              element={<Login/>}/>
             <Route path='/bbs'                element={<Bbs/>}/>
             <Route path="/qaBoard"            element={<QaBoard/>}></Route>
             <Route path="/notice"             element={<Notice/>}></Route>
