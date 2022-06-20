@@ -50,10 +50,11 @@ const Main = () => {
             <Route path='/bbs'                element={<Bbs/>}/>
             <Route path="/qaBoard"            element={<QaBoard/>}></Route>
             <Route path="/notice"             element={<Notice/>}></Route>
-            <Route path="/member"             element={<Member/>}></Route>
-            <Route path="/member/detail/:id"      element={<MemberDetail/>}></Route>
 
-            
+            <Route path="/member"             element={<Member/>}></Route>
+            <Route path="/member/detail"      element={<MemberDetail/>}></Route>
+            <Route path="/member/detail/:id"  element={<MemberDetail/>}></Route>
+
           </Routes>
         </Content>
       </Layout>

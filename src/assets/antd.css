@@ -30,3 +30,11 @@ background: #fff;
 .search-form button{
     float: right;
 }
+.btn-form{
+    margin-bottom: 10px;
+    width: 100%;
+}
+.btn-form button{
+    float: right;
+    margin-right: 10px;
+}

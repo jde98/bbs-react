@@ -1,19 +1,29 @@
 import {Button, Card, Col, Input, Row, Space, Table, Typography} from "antd";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {instance} from "../../../api/axiosInit";
-import { SearchOutlined } from '@ant-design/icons';
+import {MinusOutlined, PlusOutlined, SearchOutlined} from '@ant-design/icons';
 
   const { Text } = Typography;
 
   export default function Member() {
 
+    let navigate = useNavigate();
+
     const [data, setData] = useState([]);
     const [searchKeyword, setSearchKeyword] = useState({
-      id: null,
-      name: null
+      id: "",
+      name: ""
     });
+
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+
+    const onSearchInputChange = (e, name) => {
+      setSearchKeyword((prevState) => ({
+        ...prevState,
+        [name] : e.target.value
+      }))
+    }
 
     const onSelectChange = (selectedRowKeys) => {
       console.log('selectedRowKeys changed: ', selectedRowKeys);
@@ -70,19 +80,30 @@ import { SearchOutlined } from '@ant-design/icons';
       }
     ];
 
+    const onAddClick = () => {
+      navigate("/main/member/detail");
+    };
+
     return (
         <div>
           <Row>
             <Col span={24} className="search-form">
-              <Input value={searchKeyword.id} placeholder={"아이디"}></Input>
-              <Input value={searchKeyword.name} placeholder={"성명"}></Input>
+              <Input
+                  onChange={(e) => onSearchInputChange(e, "id")}
+                  placeholder="아이디"></Input>
+              <Input
+                  onChange={(e) => onSearchInputChange(e, "name")}
+                  placeholder="성명"></Input>
               <Button
                   type="primary"
                   icon={<SearchOutlined />}
                   onClick={() => onMemberSearch()}>조회</Button>
             </Col>
+            <Col className="btn-form">
+              <Button icon={<MinusOutlined />}>삭제</Button>
+              <Button icon={<PlusOutlined />} onClick={() => onAddClick()}>신규</Button>
+            </Col>
             <Col span={24}>
-
               <Table
                   columns={columns}
                   dataSource={data}
