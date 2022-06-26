@@ -54,6 +54,7 @@ const Main = () => {
             <Route path="/member"             element={<Member/>}></Route>
             <Route path="/member/detail"      element={<MemberDetail/>}></Route>
             <Route path="/member/detail/:id"  element={<MemberDetail/>}></Route>
+            <Route path="*"                   element={<div>존재하지 않는 주소입니다.</div>}></Route>
 
           </Routes>
         </Content>
