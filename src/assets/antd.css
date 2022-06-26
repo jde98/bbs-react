@@ -8,12 +8,11 @@
 }
 
 .ant-row-rtl #components-layout-demo-top-side-2 .logo {
-float: right;
-margin: 16px 0 16px 24px;
+    float: right;
+    margin: 16px 0 16px 24px;
 }
-
 .site-layout-background {
-background: #fff;
+    background: #fff;
 }
 .search-form{
     border: 1px solid #f0f0f0;
