@@ -42,6 +42,7 @@ export default function MemberDetail() {
         }];
 
     const [user, setUser] = useState({
+        idx : null,
         id : null,
         password : null,
         name : null,
@@ -54,6 +55,8 @@ export default function MemberDetail() {
         rule : null,
         imageFileNo : null
     });
+
+    const [userIdChk, setUserIdChk] = useState(false);
 
     const [file, setFile] = useState(null);
 
@@ -93,7 +96,7 @@ export default function MemberDetail() {
             const searchMember = async () => {
                 let result = {}
                 try{
-                    result = await instance.get('http://3.35.218.236/bbs/user',{
+                    result = await instance.get('/user',{
                         params: {
                             id: id,
                         }
@@ -119,12 +122,31 @@ export default function MemberDetail() {
         }));
     }
 
-    const onInputChange = (event, name) =>{
+    const onInputChange = async (event, name) =>{
 
         let value = event.target.value;
 
         if (name === 'birthday'){/* 생년월일 하이푼 제거 */
             value = value.replace("-", "");
+        }
+
+        if(name === 'id' ){
+            if(value){
+                const result = await instance.get("/user/userChk", {
+                    params: {
+                        id : value
+                    }
+                });
+
+                /* 중복없음 */
+                if(result.data.userResult == 0){
+                    setUserIdChk(false);
+                } else { /* 중복있음 */
+                    setUserIdChk(true);
+                }
+            } else {
+                setUserIdChk(false);
+            }
         }
 
         setUser((prevState) => ({
@@ -143,7 +165,7 @@ export default function MemberDetail() {
                 return;
             }
 
-            instance.post('http://3.35.218.236/bbs/user', {
+            instance.post('/user', {
                 params : user
             });
 
@@ -155,6 +177,10 @@ export default function MemberDetail() {
 
     const memberValidation = () => {
 
+        if(userIdChk == true){
+            alert("중복된 계정이 존재합니다.");
+            return false;
+        }
         if(user.id == null){
             alert("아이디를 입력해주세요");
             return false;
@@ -224,8 +250,6 @@ export default function MemberDetail() {
             fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
         }
 
-        console.log(fullAddress);
-
         setUser((prevState) => ({
             ...prevState,
             address: fullAddress
@@ -241,7 +265,10 @@ export default function MemberDetail() {
     return (
         <>
             <Row>
-                <Col>
+                <Col
+                    xs={{span: 24}}
+                    lg={{span:4}}
+                >
                     <Upload
                         name="avatar"
                         listType="picture-card"
@@ -264,16 +291,27 @@ export default function MemberDetail() {
                         )}
                     </Upload>
                 </Col>
-                <Col>
-                    <Row gutter={15}>
-                        <Col>
+                <Col
+                    xs={{span:24}}
+                    lg={{span:20}}
+                >
+                    <Row gutter={15} className="row-margin-bottom">
+                        <Col span="12">
                             <Input
                                 placeholder="아이디"
                                 onChange={(event) => onInputChange(event, "id")}
                                 value={user.id}
                             />
+                            {
+                                userIdChk == true ?
+                                    (
+                                    <div>중복된 계정이 존재합니다.</div>
+                                    )
+                                    :
+                                    null
+                            }
                         </Col>
-                        <Col>
+                        <Col span="12">
                             <Input
                                 type="password"
                                 placeholder="비밀번호"
@@ -282,15 +320,15 @@ export default function MemberDetail() {
                             />
                         </Col>
                     </Row>
-                    <Row gutter={15}>
-                        <Col>
+                    <Row gutter={15} className="row-margin-bottom">
+                        <Col span="12">
                             <Input
                                 placeholder="이름"
                                 onChange={(event) => onInputChange(event, "name")}
                                 value={user.name}
                             />
                         </Col>
-                        <Col>
+                        <Col span="12">
                             <Input
                                 type="date"
                                 onChange={(event) => onInputChange(event, "birthday")}
@@ -298,15 +336,15 @@ export default function MemberDetail() {
                             />
                         </Col>
                     </Row>
-                    <Row gutter={15}>
-                        <Col>
+                    <Row gutter={15} className="row-margin-bottom">
+                        <Col span="12">
                             <Input
                                 placeholder="EMAIL"
                                 onChange={(event) => onInputChange(event, "email")}
                                 value={user.email}
                             />
                         </Col>
-                        <Col>
+                        <Col span="12">
                             <Select
                                 defaultValue={genderList[0]}
                                 style={{
@@ -322,15 +360,15 @@ export default function MemberDetail() {
                             </Select>
                         </Col>
                     </Row>
-                    <Row gutter={15}>
-                        <Col>
+                    <Row gutter={15} className="row-margin-bottom">
+                        <Col span="12">
                             <Input
                                 placeholder="연락처"
                                 onChange={(event) => onInputChange(event, "phoneNum")}
                                 value={user.phoneNum}
                             />
                         </Col>
-                        <Col>
+                        <Col span="12">
                             <Select
                                 defaultValue={ruleList[0]}
                                 style={{
@@ -346,8 +384,8 @@ export default function MemberDetail() {
                             </Select>
                         </Col>
                     </Row>
-                    <Row gutter={15}>
-                        <Col>
+                    <Row gutter={15} className="row-margin-bottom">
+                        <Col span="12">
                             <Input
                                 placeholder="주소"
                                 onChange={(event) => onInputChange(event, "address")}
@@ -355,12 +393,12 @@ export default function MemberDetail() {
                                 disabled={true}
                             />
                         </Col>
-                        <Col>
+                        <Col span="12">
                             <Button onClick={() => setIsModalVisible(true)}>주소찾기</Button>
                         </Col>
                     </Row>
-                    <Row gutter={15} className={rowMargin}>
-                        <Col>
+                    <Row gutter={15} className="row-margin-bottom">
+                        <Col span={24}>
                             <Input placeholder="주소상세"
                                    onChange={(event) => onInputChange(event, "addressDtl")}
                                    value={user.addressDtl}
@@ -369,9 +407,13 @@ export default function MemberDetail() {
                     </Row>
                 </Col>
             </Row>
-            <Row gutter={15}>
-                <Button onClick={() => onSaveClick()}>저장</Button>
-                <Button onClick={() => navigate(-1)}>뒤로가기</Button>
+            <Row gutter={10} className="row-right">
+                <Col>
+                    <Button onClick={() => onSaveClick()}>저장</Button>
+                </Col>
+                <Col>
+                    <Button onClick={() => navigate(-1)}>뒤로가기</Button>
+                </Col>
             </Row>
 
             <Modal title="주소찾기" visible={isModalVisible} onOk={() => setIsModalVisible(false)} onCancel={() => setIsModalVisible(false)}>

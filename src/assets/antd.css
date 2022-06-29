@@ -37,3 +37,9 @@
     float: right;
     margin-right: 10px;
 }
+.row-margin-bottom{
+    margin-bottom: 10px;
+}
+.row-right{
+    float: right;
+}
