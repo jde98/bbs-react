@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {Input, Button, Row, Col, Select, Upload, Modal} from 'antd';
 import { useEffect } from "react";
 import {useNavigate, useParams} from "react-router-dom";
@@ -42,18 +42,6 @@ export default function MemberDetail() {
         }];
 
     const [user, setUser] = useState({
-        idx : null,
-        id : null,
-        password : null,
-        name : null,
-        birthday : null,
-        email : null,
-        gender : null,
-        phoneNum : null,
-        address : null,
-        addressDtl : null,
-        rule : null,
-        imageFileNo : null
     });
 
     const [userIdChk, setUserIdChk] = useState(false);
@@ -126,9 +114,9 @@ export default function MemberDetail() {
 
         let value = event.target.value;
 
-        if (name === 'birthday'){/* 생년월일 하이푼 제거 */
-            value = value.replace("-", "");
-        }
+        // if (name === 'birthday'){/* 생년월일 하이푼 제거 */
+        //     value = value.replace("-", "");
+        // }
 
         if(name === 'id' ){
             if(value){
@@ -165,10 +153,7 @@ export default function MemberDetail() {
                 return;
             }
 
-            instance.post('/user', {
-                params : user
-            });
-
+            instance.post('/user', user);
 
             window.alert("저장되었습니다.");
             navigate("/main/member");
@@ -301,6 +286,7 @@ export default function MemberDetail() {
                                 placeholder="아이디"
                                 onChange={(event) => onInputChange(event, "id")}
                                 value={user.id}
+                                disabled={id ? true : false}
                             />
                             {
                                 userIdChk == true ?
@@ -317,6 +303,7 @@ export default function MemberDetail() {
                                 placeholder="비밀번호"
                                 onChange={(event) => onInputChange(event, "password")}
                                 value={user.password}
+                                disabled={id ? true : false}
                             />
                         </Col>
                     </Row>
@@ -351,6 +338,7 @@ export default function MemberDetail() {
                                     width: 120,
                                 }}
                                 onChange={(value) => handleProvinceChange(value, "gender")}
+                                value={user.gender}
                             >
                                 {
                                     genderList.map((gender, index) => (
@@ -375,6 +363,7 @@ export default function MemberDetail() {
                                     width: 120,
                                 }}
                                 onChange={(value) => handleProvinceChange(value, "rule")}
+                                value={user.rule}
                             >
                                 {
                                     ruleList.map((rule, index) => (
