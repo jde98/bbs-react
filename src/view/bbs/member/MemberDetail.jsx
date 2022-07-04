@@ -84,15 +84,11 @@ export default function MemberDetail() {
             const searchMember = async () => {
                 let result = {}
                 try{
-                    result = await instance.get('/user',{
-                        params: {
-                            id: id,
-                        }
-                    });
+                    result = await instance.get(`/user/${id}`  ,{});
                 } catch(e){
                     return e;
                 }
-                return result.data.userList;
+                return result.user;
             };
 
             searchMember().then(result => {

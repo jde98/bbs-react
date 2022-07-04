@@ -25,9 +25,9 @@ import {MinusOutlined, PlusOutlined, SearchOutlined} from '@ant-design/icons';
       }))
     }
 
-    const onSelectChange = (selectedRowKeys) => {
+    const onSelectChange = (newSelectedRowKeys) => {
       console.log('selectedRowKeys changed: ', selectedRowKeys);
-      setSelectedRowKeys(selectedRowKeys);
+      setSelectedRowKeys(newSelectedRowKeys);
     };
 
     const rowSelection = {
@@ -39,8 +39,14 @@ import {MinusOutlined, PlusOutlined, SearchOutlined} from '@ant-design/icons';
     useEffect(() => {
 
       const searchMember = async (param) => {
-        const result = await instance.get('http://3.35.218.236/bbs/user', param);
-        setData(result.data.userList);
+        let result = await instance.get('/user', param);
+
+        result = result.data.userList.map((value, index) => {
+          value.key = index;
+          return value;
+        });
+
+        setData(result);
       }
 
       searchMember({});
@@ -57,11 +63,6 @@ import {MinusOutlined, PlusOutlined, SearchOutlined} from '@ant-design/icons';
     }
 
     const columns = [
-      {
-        title: 'No',
-        dataIndex: 'idx',
-        key: 'No'
-      },
       {
         title: 'ID',
         dataIndex: 'id',
@@ -84,6 +85,17 @@ import {MinusOutlined, PlusOutlined, SearchOutlined} from '@ant-design/icons';
       navigate("/main/member/detail");
     };
 
+    const onDeleteClick = () => {
+      if(window.confirm("삭제하시겠습니까?")){
+        if(selectedRowKeys.length == 0){
+          window.alert("선택된 항목이 없습니다.");
+        } else {
+          instance.delete("/user", selectedRowKeys);
+
+        }
+      }
+    }
+
     return (
         <div>
           <Row>
@@ -100,7 +112,7 @@ import {MinusOutlined, PlusOutlined, SearchOutlined} from '@ant-design/icons';
                   onClick={() => onMemberSearch()}>조회</Button>
             </Col>
             <Col className="btn-form">
-              <Button icon={<MinusOutlined />}>삭제</Button>
+              <Button icon={<MinusOutlined />} onClick={() => onDeleteClick()}>삭제</Button>
               <Button icon={<PlusOutlined />} onClick={() => onAddClick()}>신규</Button>
             </Col>
             <Col span={24}>
