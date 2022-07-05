@@ -88,7 +88,7 @@ export default function MemberDetail() {
                 } catch(e){
                     return e;
                 }
-                return result.user;
+                return result.data.user;
             };
 
             searchMember().then(result => {
