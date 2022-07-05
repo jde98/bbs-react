@@ -27,6 +27,7 @@ import {MinusOutlined, PlusOutlined, SearchOutlined} from '@ant-design/icons';
 
     const onSelectChange = (newSelectedRowKeys) => {
       console.log('selectedRowKeys changed: ', selectedRowKeys);
+
       setSelectedRowKeys(newSelectedRowKeys);
     };
 
@@ -42,7 +43,7 @@ import {MinusOutlined, PlusOutlined, SearchOutlined} from '@ant-design/icons';
         let result = await instance.get('/user', param);
 
         result = result.data.userList.map((value, index) => {
-          value.key = index;
+          value.key = value.idx;
           return value;
         });
 
@@ -58,8 +59,14 @@ import {MinusOutlined, PlusOutlined, SearchOutlined} from '@ant-design/icons';
         params :  searchKeyword
       };
 
-      const result = await instance.get('http://3.35.218.236/bbs/user', param);
-      setData(result.data.userList);
+      let result = await instance.get('/user', param);
+
+      result = result.data.userList.map((value, index) => {
+        value.key = value.idx;
+        return value;
+      });
+
+      setData(result);
     }
 
     const columns = [
@@ -85,13 +92,29 @@ import {MinusOutlined, PlusOutlined, SearchOutlined} from '@ant-design/icons';
       navigate("/main/member/detail");
     };
 
-    const onDeleteClick = () => {
+    const onDeleteClick = async () => {
       if(window.confirm("삭제하시겠습니까?")){
         if(selectedRowKeys.length == 0){
           window.alert("선택된 항목이 없습니다.");
         } else {
-          instance.delete("/user", selectedRowKeys);
+          let delRow = [];
 
+          selectedRowKeys.forEach((value, index) => {
+            let obj = {
+              idx : value
+            };
+
+            delRow.push(obj);
+          });
+
+          const result = await instance.delete("/user", {
+            data : delRow
+          });
+
+          if(result.status === 200){
+            window.alert("삭제되었습니다.");
+            onMemberSearch();
+          }
         }
       }
     }
@@ -102,10 +125,12 @@ import {MinusOutlined, PlusOutlined, SearchOutlined} from '@ant-design/icons';
             <Col span={24} className="search-form">
               <Input
                   onChange={(e) => onSearchInputChange(e, "id")}
-                  placeholder="아이디"></Input>
+                  placeholder="아이디"
+                  onKeyPress={(e) => e.key === "Enter"? onMemberSearch(): null}></Input>
               <Input
                   onChange={(e) => onSearchInputChange(e, "name")}
-                  placeholder="성명"></Input>
+                  placeholder="성명"
+                  onKeyPress={(e) => e.key === "Enter"? onMemberSearch(): null}></Input>
               <Button
                   type="primary"
                   icon={<SearchOutlined />}

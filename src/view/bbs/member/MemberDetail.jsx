@@ -139,7 +139,7 @@ export default function MemberDetail() {
         }))
     }
 
-    const onSaveClick = () => {
+    const onSaveClick = async () => {
 
         console.log(user);
 
@@ -149,10 +149,12 @@ export default function MemberDetail() {
                 return;
             }
 
-            instance.post('/user', user);
+            const result = await instance.post('/user', user);
 
-            window.alert("저장되었습니다.");
-            navigate("/main/member");
+            if(result.status === 200){
+                window.alert("저장되었습니다.");
+                navigate("/main/member");
+            }
         }
     }
 
